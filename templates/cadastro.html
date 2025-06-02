@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="boas-vindas-container">
+    <h2 class="boas-vindas">Seja bem-vindo às Indústrias Wayne</h2>
+    <p class="boas-vindas-subtitulo">A empresa que você sempre sonhou em trabalhar</p>
+</div>
+
+<div class="container login-container">
+    <h1>Cadastro</h1>
+    {% if erro %}
+        <p class="msg-erro">{{ erro }}</p>
+    {% elif sucesso %}
+        <p class="msg-sucesso">{{ sucesso }}</p>
+    {% endif %}
+
+    <form method="POST" action="/cadastro">
+        <input type="text" name="nome" placeholder="Nome completo" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <input type="password" name="confirmar_senha" placeholder="Confirmar senha" required>
+        <button type="submit">Registrar</button>
+    </form>
+    
+
+    <p class="criar-conta-msg">
+        Já tem uma conta? <a href="{{ url_for('login_page') }}">Faça login aqui</a>
+    </p>
+</div>
+</body>
+</html>

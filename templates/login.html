@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %}Login{% endblock %}
+{% block conteudo %}
+<div class="login-page">
+    <div class="welcome-text">
+    <h2 class="title">Seja bem-vindo às Indústrias Wayne</h2>
+    <p>Transformando desafios em oportunidades.</p>
+    </div>
+    <div class="login-form-container">
+    <h2 class="login">Login</h2>
+    {% if erro %}
+        <p class="msg-erro">{{ erro }}</p>
+    {% elif sucesso %}
+        <p class="msg-sucesso">{{ sucesso }}</p>
+    {% endif %}
+    <form method="POST" action="/login">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+    <p class="criar-conta-msg">
+        Não tem uma conta? <a href="/cadastro">Crie uma agora</a>
+    </p>
+    </div>
+</div>
+{% endblock %}

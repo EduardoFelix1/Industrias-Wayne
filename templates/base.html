@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Sistema{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="menu">
+        <a href="/dashboard">Inicio</a>
+        <a href="{{ url_for('usuarios_page') }}">Usuários</a>
+        <a href="{{ url_for('recursos_page') }}">Recursos</a>
+        <a href="{{ url_for('reservas_page') }}">Reservas</a>
+        <a href="/logout">Sair</a>
+    </nav>
+
+    {% block conteudo %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        .subtitulo {
+            color: #aaaaaa;
+            margin-bottom: 50px;
+        }
+        .card-opcao {
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 30px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .card-opcao:hover {
+            background-color: #292929;
+            transform: translateY(-5px);
+        }
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4dabf7;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/5b9266f206.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Bem-vindo, {{ nome }}.</h1>
+        <p class="subtitulo">Sistema de Gerenciamento Interno</p>
+
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <a href="/usuarios-page" class="card-opcao d-block">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <strong>Usuários</strong>
+                    <p class="mt-2">{{ total_usuarios }} registrados</p>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="/recursos-page" class="card-opcao d-block">
+                    <div class="icon"><i class="fas fa-boxes"></i></div>
+                    <strong>Recursos</strong>
+                    <p class="mt-2">{{ total_recursos }} disponíveis</p>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="/reservas" class="card-opcao d-block">
+                    <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                    <strong>Reservas</strong>
+                    <p class="mt-2">{{ total_reservas }} ativas</p>
+                </a>
+            </div>
+            <div class="col-md-3 col-6">
+                <a href="/logout" class="card-opcao d-block">
+                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                    <strong>Sair</strong>
+                    <p class="mt-2">Encerrar sessão</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

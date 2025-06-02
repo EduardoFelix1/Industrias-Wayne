@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Gerenciar Reservas{% endblock %}
+
+{% block conteudo %}
+<div class="container">
+    <h1>Gerenciar Reservas</h1>
+
+    <form method="POST" action="/reservas">
+        <label for="usuario_id">Usuário:</label>
+        <select name="usuario_id" id="usuario_id">
+            {% for u in usuarios %}
+                <option value="{{ u.id }}">{{ u.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="recurso_id">Recurso:</label>
+        <select name="recurso_id" id="recurso_id">
+            {% for r in recursos %}
+                <option value="{{ r.id }}">{{ r.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" required>
+
+        <button type="submit">Reservar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Recurso</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservas %}
+            <tr>
+                <td>{{ r.usuario.nome }}</td>
+                <td>{{ r.recurso.nome }}</td>
+                <td>{{ r.data }}</td>
+                <td>
+                    <form method="POST" action="/reservas/{{ r.id }}/excluir">
+                        <button type="submit">Cancelar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

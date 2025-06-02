@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Gerenciar Recursos{% endblock %}
+
+{% block conteudo %}
+<div class="container">
+    <h1>Gerenciar Recursos</h1>
+
+    <form id="form-adicionar-recurso">
+        <input type="text" id="nome" placeholder="Nome do Recurso" required>
+        <input type="text" id="descricao" placeholder="Descrição" required>
+        <button type="submit">Adicionar Recurso</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-recursos">
+            <!-- Dados via JS -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function carregarRecursos() {
+        const resp = await fetch('/recursos');
+        const dados = await resp.json();
+        const tbody = document.getElementById('tabela-recursos');
+        tbody.innerHTML = '';
+        dados.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="tabela-input" value="${r.nome}" disabled></td>
+                <td><input type="text" class="tabela-input" value="${r.descricao}" disabled></td>
+
+                <td>
+                    <button onclick="editarRecurso(this, ${r.id})">Editar</button>
+                    <button onclick="salvarRecurso(this, ${r.id})" style="display:none;">Salvar</button>
+                    <button onclick="excluirRecurso(${r.id})">Excluir</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function adicionarRecurso(event) {
+        event.preventDefault();
+        const nome = document.getElementById('nome').value;
+        const descricao = document.getElementById('descricao').value;
+        await fetch('/recursos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, descricao })
+        });
+        carregarRecursos();
+        event.target.reset();
+    }
+
+    async function excluirRecurso(id) {
+        await fetch(`/recursos/${id}`, { method: 'DELETE' });
+        carregarRecursos();
+    }
+
+    function editarRecurso(botao, id) {
+        const tr = botao.closest('tr');
+        tr.querySelectorAll('input').forEach(input => input.disabled = false);
+        botao.style.display = 'none';
+        tr.querySelector('button[onclick^="salvarRecurso"]').style.display = 'inline-block';
+    }
+
+    async function salvarRecurso(botao, id) {
+        const tr = botao.closest('tr');
+        const inputs = tr.querySelectorAll('input');
+        const nome = inputs[0].value;
+        const descricao = inputs[1].value;
+
+        await fetch(`/recursos/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, descricao })
+        });
+
+        inputs.forEach(input => input.disabled = true);
+        botao.style.display = 'none';
+        tr.querySelector('button[onclick^="editarRecurso"]').style.display = 'inline-block';
+    }
+
+    document.getElementById('form-adicionar-recurso').addEventListener('submit', adicionarRecurso);
+    carregarRecursos();
+</script>
+{% endblock %}
